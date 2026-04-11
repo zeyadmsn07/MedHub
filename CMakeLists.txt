@@ -11,9 +11,19 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_executable(MedHub 
     main.cpp
-    mainwindow.cpp
-    mainwindow.ui
-    mainwindow.h
+    QtLogic/mainwindow.cpp
+    QtLogic/mainwindow.h
+    QtLogic/mainwindow.ui
+    Logic/AvailabilitySlot.cpp
+    Logic/AvailabilitySlot.h
+    Logic/Appointment.cpp
+    Logic/Appointment.h
+    Logic/HospitalSystem.cpp
+    Logic/HospitalSystem.h
+    Logic/DataManager.cpp
+    Logic/DataManager.h
+    Individuals/Doctor.cpp
+    Individuals/Doctor.h
 )
 
 target_link_libraries(MedHub PRIVATE Qt6::Widgets)
