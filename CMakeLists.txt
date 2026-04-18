@@ -24,6 +24,10 @@ add_executable(MedHub
     Logic/DataManager.h
     Individuals/Doctor.cpp
     Individuals/Doctor.h
+    Individuals/Person.cpp
+    Individuals/Person.h
+    Individuals/Patient.cpp
+    Individuals/Patient.h
 )
 
 target_link_libraries(MedHub PRIVATE Qt6::Widgets)
