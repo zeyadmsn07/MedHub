@@ -1,0 +1,54 @@
+#include "HospitalSystem.h"
+
+int HospitalSystem::getDoctorCount() const { return doctors.size(); }
+int HospitalSystem::getPatientCount() const { return patients.size(); }
+int HospitalSystem::getAppointmentCount() const { return appointments.size(); }
+
+bool HospitalSystem::registerPatient(const Patient& p)
+{
+    for(int i = 0; i < patients.size(); i++) //check whether the patient is already registered
+    {
+        if(patients.at(i) == p)
+            return false;
+    }
+    
+    patients.push_back(p);
+    return true;
+}
+
+bool HospitalSystem::bookAppointment(const Appointment& appt)
+{
+    //Check if all conditions are met
+    if( checkDailyLimit(appt.getPatient()->getNationalID(), appt.getDate()) ||
+        hasConflict(appt.getDoctor()->getId(), appt.getPatient()->getNationalID(), appt.getDate(), appt.getStartTime()) ||
+        !isWithinBusinessHours(appt.getDate(), appt.getStartTime()) ||
+        !isWithinBookableRange(appt.getDate()) )
+        return false;
+    
+    appointments.push_back(appt);
+    return true;
+}
+
+bool cancelAppointment(const string& patID, const string& docID, QDate d);
+
+bool HospitalSystem::checkDailyLimit(const string& patID, QDate d) const
+{
+    int count = 0;
+    for(Appointment apt : appointments)
+    {
+        if(apt.getPatient()->getNationalID() == patID && apt.getDate() == d)
+            count++;
+    }
+    
+    if (count ==)
+    return true;
+}
+bool hasConflict(const string& docID, const string& patID, QDate d, QTime t) const;
+bool isWithinBusinessHours(const QDate& d, const QTime& t) const;
+bool isWithinBookableRange(const QDate& d) const;
+
+vector<QTime> generate20MinSlots (const string& docID, const QDate& d);
+Patient* findPatientByName(const string& n) const;
+Patient* findDoctorByID(const string& id) const;
+vector<Doctor> getDoctorsByDepartment(const string& dept) const;
+};

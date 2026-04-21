@@ -1,5 +1,4 @@
 #include "Person.h"
-#include <string>
 
 Person::Person(const std::string& n): name(n) {}
 
