@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/">
+        <file>doctors-1.csv</file>
+        <file>availability-1.csv</file>
+    </qresource>
+</RCC>

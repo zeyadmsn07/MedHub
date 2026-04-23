@@ -11,6 +11,9 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_executable(MedHub 
     main.cpp
+    doctors-1.csv
+    availability-1.csv
+    resources.qrc
     QtLogic/mainwindow.cpp
     QtLogic/mainwindow.h
     QtLogic/mainwindow.ui

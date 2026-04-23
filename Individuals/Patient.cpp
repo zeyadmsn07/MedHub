@@ -13,7 +13,6 @@ void Patient::setMobileNumber(string num)
     mobileNumber = num;
 }
 
-// We check if two patients are the same by comparing their National IDs
 bool Patient::operator==(const Patient &other) const
 {
     return this->nationalID == other.nationalID;

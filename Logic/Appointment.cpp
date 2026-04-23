@@ -18,8 +18,8 @@ void Appointment::setStatus(AppointmentStatus s) {
     status = s;
 }
 
-// checking for appointments conflict
-bool Appointment::operator==(const Appointment& other) const {
+bool Appointment::operator==(const Appointment& other) const
+{
     return (this->doctor == other.doctor && 
             this->date == other.date && 
             this->startTime == other.startTime);
