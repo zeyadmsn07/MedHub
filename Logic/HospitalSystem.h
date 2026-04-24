@@ -33,6 +33,10 @@ public:
     Patient* findPatientByName(const string& n);
     Doctor* findDoctorByID(const string& id);
     vector<Doctor> getDoctorsByDepartment(const string& dept) const;
-
+    vector<Doctor>& getDoctors() { return doctors; }
+    vector<Appointment>& getAppointments() { return appointments; }
+    void saveData();
     void loadDocs();
+
+
 };

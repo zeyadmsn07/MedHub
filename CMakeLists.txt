@@ -9,14 +9,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-add_executable(MedHub 
+add_executable(MedHub
     main.cpp
     doctors-1.csv
     availability-1.csv
     resources.qrc
+
     QtLogic/mainwindow.cpp
     QtLogic/mainwindow.h
     QtLogic/mainwindow.ui
+    QtLogic/timetablewidget.cpp
+    QtLogic/timetablewidget.h
+    QtLogic/timetablewidget.ui
+    QtLogic/patientregistrationdialog.cpp
+    QtLogic/patientregistrationdialog.h
+    QtLogic/patientregistrationdialog.ui
+    QtLogic/appointmentbookingdialog.cpp
+    QtLogic/appointmentbookingdialog.h
+    QtLogic/appointmentbookingdialog.ui
+
     Logic/AvailabilitySlot.cpp
     Logic/AvailabilitySlot.h
     Logic/Appointment.cpp
@@ -25,6 +36,7 @@ add_executable(MedHub
     Logic/HospitalSystem.h
     Logic/DataManager.cpp
     Logic/DataManager.h
+
     Individuals/Doctor.cpp
     Individuals/Doctor.h
     Individuals/Person.cpp

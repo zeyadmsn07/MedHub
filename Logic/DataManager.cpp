@@ -78,12 +78,90 @@ void DataManager::loadStaticData(vector<Doctor>& allDocs)
     }
 }
 
-void DataManager::saveLocalData()
+void DataManager::saveLocalData(const std::vector<Patient>& patients, const std::vector<Appointment>& appointments)
 {
+    QFile pFile("patients_saved.csv");
+    if(pFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&pFile);
+        for(const Patient& p : patients) {
+            out << QString::fromStdString(p.getName()) << ","
+                << p.getBirthdate().toString("yyyy-MM-dd") << ","
+                << QString(p.getGender()) << ","
+                << QString::fromStdString(p.getMobileNumber()) << ","
+                << QString::fromStdString(p.getNationalID()) << "\n";
+        }
+        pFile.close();
+    }
 
+    QFile aFile("appointments_saved.csv");
+    if(aFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&aFile);
+        for(const Appointment& appt : appointments) {
+            out << QString::fromStdString(appt.getPatient()->getNationalID()) << ","
+                << QString::fromStdString(appt.getDoctor()->getId()) << ","
+                << appt.getDate().toString("yyyy-MM-dd") << ","
+                << appt.getStartTime().toString("hh:mm AP") << "\n";
+        }
+        aFile.close();
+    }
 }
 
-void DataManager::loadLocalData()
+void DataManager::loadLocalData(std::vector<Patient>& patients, std::vector<Appointment>& appointments, std::vector<Doctor>& doctors)
 {
+    QFile pFile("patients_saved.csv");
+    if(pFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&pFile);
+        while(!in.atEnd()) {
+            QString line = in.readLine();
+            if(line.isEmpty()) continue;
+            QStringList data = line.split(",");
+            if(data.size() >= 5) {
+                Patient p(data[0].toStdString(),
+                          QDate::fromString(data[1], "yyyy-MM-dd"),
+                          data[2].at(0).toLatin1(),
+                          data[3].toStdString(),
+                          data[4].toStdString());
+                patients.push_back(p);
+            }
+        }
+        QFile aFile("appointments_saved.csv");
+        if(aFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&aFile);
+            while(!in.atEnd()) {
+                QString line = in.readLine();
+                if(line.isEmpty() || line.startsWith("PatientID")) continue; // Skip header or empty lines
+
+                QStringList data = line.split(",");
+                if(data.size() >= 4) {
+                    string patID = data[0].toStdString();
+                    string docID = data[1].toStdString();
+                    QDate d = QDate::fromString(data[2], "yyyy-MM-dd");
+                    QTime t = QTime::fromString(data[3], "hh:mm AP");
+
+                    Patient* pPtr = nullptr;
+                    for(int i = 0; i < patients.size(); i++) {
+                        if(patients[i].getNationalID() == patID) {
+                            pPtr = &patients[i];
+                            break;
+                        }
+                    }
+
+                    Doctor* dPtr = nullptr;
+                    for(int i = 0; i < doctors.size(); i++) {
+                        if(doctors[i].getId() == docID) {
+                            dPtr = &doctors[i];
+                            break;
+                        }
+                    }
+
+                    if(pPtr != nullptr && dPtr != nullptr) {
+                        Appointment appt(pPtr, dPtr, d, t);
+                        appointments.push_back(appt);
+                    }
+                }
+            }
+            aFile.close();
+        }
+    }
 
 }

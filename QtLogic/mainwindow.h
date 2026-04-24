@@ -1,20 +1,27 @@
 #pragma once
-#include <QMainWindow>
 
-QT_BEGIN_NAMESPACE
+#include <QMainWindow>
+#include "../Logic/HospitalSystem.h"
+
 namespace Ui {
 class MainWindow;
 }
-QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void on_btnRegisterPatient_clicked();
+    void on_btnBookAppointment_clicked();
+
+    void updateDashboardStats();
 
 private:
     Ui::MainWindow *ui;
+
+    HospitalSystem backend;
 };

@@ -131,7 +131,7 @@ Doctor* HospitalSystem::findDoctorByID(const string& id)
 {
     for(int i = 0; i < doctors.size(); i++)
     {
-        if(doctors.at(i).getName() == id)
+        if(doctors.at(i).getId() == id)
             return &doctors.at(i);
     }
     return nullptr;
@@ -150,4 +150,10 @@ vector<Doctor> HospitalSystem::getDoctorsByDepartment(const string& dept) const
 void HospitalSystem::loadDocs()
 {
     DM.loadStaticData(doctors);
+    DM.loadLocalData(patients, appointments, doctors);
+}
+
+void HospitalSystem::saveData()
+{
+    DM.saveLocalData(patients, appointments);
 }

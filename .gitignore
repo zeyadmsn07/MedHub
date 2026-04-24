@@ -1,7 +1,27 @@
-
+# CMake build folders and user files
 build/
-cmake-build-*/
-*.user
-*.user.*
-*.o
+out/
+.cmake/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+*.cmake
+CMakeLists.txt.user
+
+# Qt generated files
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+*.pro.user
+
+# Executables and objects
 *.exe
+*.obj
+*.o
+*.dll
+*.lib
+*.a
+
+# OS generated files
+.DS_Store
+Thumbs.db
