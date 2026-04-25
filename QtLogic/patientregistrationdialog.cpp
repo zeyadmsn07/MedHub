@@ -10,7 +10,7 @@ PatientRegistrationDialog::PatientRegistrationDialog(HospitalSystem& sys, QWidge
     backend(sys)
 {
     ui->setupUi(this);
-
+    this->setWindowTitle("Patient Registeration");
     ui->comboGender->addItems({"Male", "Female"});
 }
 

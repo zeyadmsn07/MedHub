@@ -28,6 +28,10 @@ add_executable(MedHub
     QtLogic/appointmentbookingdialog.h
     QtLogic/appointmentbookingdialog.ui
 
+    QtLogic/patientlogdialog.cpp
+    QtLogic/patientlogdialog.h
+    QtLogic/patientlogdialog.ui
+
     Logic/AvailabilitySlot.cpp
     Logic/AvailabilitySlot.h
     Logic/Appointment.cpp

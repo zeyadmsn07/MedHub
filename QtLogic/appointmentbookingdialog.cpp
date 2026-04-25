@@ -10,12 +10,18 @@ AppointmentBookingDialog::AppointmentBookingDialog(HospitalSystem& sys, QWidget 
     backend(sys)
 {
     ui->setupUi(this);
-
+    this->setWindowTitle("Book Appointment");
     ui->dateAppt->setDate(QDate::currentDate());
 }
 
 AppointmentBookingDialog::~AppointmentBookingDialog() {
     delete ui;
+}
+
+void AppointmentBookingDialog::prefill(const QString& docID, const QDate& date, const QTime& time) {
+    ui->txtDoctorID->setText(docID);
+    ui->dateAppt->setDate(date);
+    ui->timeAppt->setTime(time);
 }
 
 void AppointmentBookingDialog::accept() {
@@ -45,3 +51,4 @@ void AppointmentBookingDialog::accept() {
         QMessageBox::warning(this, "Error", "Booking failed! Check daily limits, schedule conflicts, or business hours.");
     }
 }
+

@@ -35,6 +35,8 @@ public:
     vector<Doctor> getDoctorsByDepartment(const string& dept) const;
     vector<Doctor>& getDoctors() { return doctors; }
     vector<Appointment>& getAppointments() { return appointments; }
+    vector<Patient>& getPatients() { return patients; }
+
     void saveData();
     void loadDocs();
 

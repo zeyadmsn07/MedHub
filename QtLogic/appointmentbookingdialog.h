@@ -12,6 +12,7 @@ class AppointmentBookingDialog : public QDialog {
 
 public:
     explicit AppointmentBookingDialog(HospitalSystem& sys, QWidget *parent = nullptr);
+    void prefill(const QString& docID, const QDate& date, const QTime& time);
     ~AppointmentBookingDialog();
 
 private slots:

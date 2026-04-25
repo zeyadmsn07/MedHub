@@ -31,6 +31,16 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Filter Department:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboDepartment"/>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnBookAppointment">
         <property name="text">
          <string>Book Appointment</string>
@@ -41,6 +51,13 @@
        <widget class="QPushButton" name="btnRegisterPatient">
         <property name="text">
          <string>Register Patient</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnViewPatients">
+        <property name="text">
+         <string>Patient Log</string>
         </property>
        </widget>
       </item>

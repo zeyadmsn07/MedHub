@@ -1,4 +1,5 @@
 #include "TimeTableWidget.h"
+#include "AppointmentBookingDialog.h"
 #include "ui_timetablewidget.h"
 #include <QHeaderView>
 #include <QMessageBox>
@@ -22,16 +23,19 @@ TimeTableWidget::TimeTableWidget(QWidget *parent) :
     proxyModel->setSourceModel(docModel);
     ui->doctorView->setModel(proxyModel);
     ui->doctorView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->doctorView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     slotModel = new QStandardItemModel(this);
     slotModel->setHorizontalHeaderLabels({"Date", "Time", "Status", "Patient ID"});
     ui->slotView->setModel(slotModel);
     ui->slotView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->slotView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     connect(ui->txtSearch, &QLineEdit::textChanged, this, [this](const QString &text){
         proxyModel->setFilterKeyColumn(1);
         proxyModel->setFilterFixedString(text);
     });
+
 }
 
 void TimeTableWidget::populateDoctorList(HospitalSystem& backend, QString deptFilter) {
@@ -55,7 +59,7 @@ void TimeTableWidget::on_doctorView_clicked(const QModelIndex &index) {
     QString docID = proxyModel->data(proxyModel->index(index.row(), 0)).toString();
     QDate startDate = QDate::currentDate();
 
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < 62; ++i) {
         QDate d = startDate.addDays(i);
         std::vector<QTime> dailySlots = backendPtr->generate20MinSlots(docID.toStdString(), d);
 
@@ -81,6 +85,26 @@ void TimeTableWidget::on_doctorView_clicked(const QModelIndex &index) {
         }
     }
 }
+
+void TimeTableWidget::on_slotView_clicked(const QModelIndex &index) {
+    if (!index.isValid() || !backendPtr) return;
+
+    QModelIndex docIndex = ui->doctorView->currentIndex();
+    if (!docIndex.isValid()) return;
+
+    QString docID = proxyModel->data(proxyModel->index(docIndex.row(), 0)).toString();
+    QDate date = QDate::fromString(slotModel->item(index.row(), 0)->text(), "yyyy-MM-dd");
+    QTime time = QTime::fromString(slotModel->item(index.row(), 1)->text(), "hh:mm AP");
+
+    AppointmentBookingDialog dialog(*backendPtr, this);
+    dialog.prefill(docID, date, time);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        on_doctorView_clicked(docIndex);
+        emit appointmentChanged();
+    }
+}
+
 void TimeTableWidget::on_btnCancelAppointment_clicked() {
     QModelIndex index = ui->slotView->currentIndex();
     if (!index.isValid() || !backendPtr) return;

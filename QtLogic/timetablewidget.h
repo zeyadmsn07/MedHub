@@ -18,9 +18,12 @@ public:
 
 public slots:
     void on_doctorView_clicked(const QModelIndex &index);
+
 signals:
     void appointmentChanged();
+
 private slots:
+    void on_slotView_clicked(const QModelIndex &index);
     void on_btnCancelAppointment_clicked();
 
 private:
